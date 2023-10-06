@@ -67,7 +67,7 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:background="@color/white"
+        android:background="@drawable/bg_edittext"
         android:inputType="number"
         android:layout_margin="20dp"
         android:padding="10dp"
