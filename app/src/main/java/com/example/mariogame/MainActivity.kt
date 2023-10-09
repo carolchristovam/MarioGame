@@ -1,5 +1,6 @@
 package com.example.mariogame
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -23,12 +24,32 @@ class MainActivity : AppCompatActivity() {
     )
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+
+        binding.surpriseNumber.setBackgroundResource(R.drawable.bloco)
+
+        binding.btPlay.setOnClickListener { view ->
+            val typeNumber2 = binding.editNumber.text.toString()
+
+            if (typeNumber2.isEmpty()){
+                message(view,"Enter a number to play!","#FF0000")
+            }else{
+                randomNumbers(view, typeNumber2.toInt())
+            }
+
+        }
+
+        binding.btReset.setOnClickListener {
+            binding.editNumber.setText("")
+            advance = 0
+            binding.linearProgressIndicator.setProgress(advance,true)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -94,6 +115,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (advance >90 ){
+            val intent = Intent(this,GameOver::class.java)
+            startActivity(intent)
 
         }
 
