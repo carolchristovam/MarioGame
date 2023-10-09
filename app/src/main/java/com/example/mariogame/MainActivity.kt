@@ -1,9 +1,13 @@
 package com.example.mariogame
 
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import com.example.mariogame.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun randomNumbers(view: View, typeNumber2: Int ){
 
         for(n in 0 .. 11) {
@@ -75,9 +80,11 @@ class MainActivity : AppCompatActivity() {
 
         if (typeNumber2 != nRandom){
             binding.surpriseNumber.setBackgroundResource(R.drawable.bloco)
+            message(view,"Bad choice!! Try again!", "#FF0000")
             advance += 30
             binding.linearProgressIndicator.setProgress(advance,true)
         }else{
+            message(view,"Congratulations!! You hit the nail on the head!", "#2D9031")
             advance -= 120
             binding.surpriseNumber.setBackgroundResource(imgNumber)
             binding.editNumber.setText("")
@@ -92,7 +99,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun message (view: View){
+    private fun message (view: View, message: String, color1: String){
+        val snackbar = Snackbar.make(view,message,Snackbar.LENGTH_SHORT)
+        snackbar.setBackgroundTint(Color.parseColor(color1))
+        snackbar.setTextColor(Color.parseColor("#FFFFFF"))
+        snackbar.show()
 
     }
 }
